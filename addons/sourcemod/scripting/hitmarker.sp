@@ -34,13 +34,16 @@ public Action OnPlayerTakeDamage(int victim, int &attacker, int &inflictor, floa
 	if(!IsValidClient(victim))
 		return Plugin_Continue;
 	
+	if(!IsValidClient(attacker))
+		return Plugin_Continue;
+	
 	if(weapon < 0 || !IsValidEntity(weapon))
 		return Plugin_Continue;
 		
 	char className[64];
 	GetEntityClassname(weapon, className, sizeof(className));
 	
-	if(!StrContains(className, "knife", false) || !StrContains(className, "bayonet", false)) // Not attacked by knife
+	if(StrContains(className, "knife", false) != -1 || StrContains(className, "bayonet", false)  != -1) // Not attacked by knife
 		return Plugin_Continue;
 	
 	if(damage <= 0.0)
